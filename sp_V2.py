@@ -9,8 +9,8 @@ warnings.filterwarnings('ignore')
 from datetime import datetime
 import time
 
-access_key = "Sa3AtCd1lodjxiiJ6EEAFi7K6ZM66SUwxpj2gIsN"
-secret_key = "UUUJLzYiUfXfIVwMzYh4pBnbp6Z3pbHBhdD4x4Ex"
+access_key = "a"
+secret_key = "a"
 
 upbit = pyupbit.Upbit(access_key, secret_key)
 krw = upbit.get_balance("KRW")
