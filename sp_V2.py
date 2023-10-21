@@ -74,28 +74,19 @@ def check_buy_sell_signals(df):
 
     last_row_index = len(df.index) - 1
     previous_row_index = last_row_index - 1
-    current_price_up = df['close'][-1] * 0.95
+    close95 = df['close'][-1] * 0.95
     ma120 = get_ma120("KRW-ETH")
-    cv = df['close'][-1]
-    #print(df['close'][-1])
-    #print(current_price_up)
-    #print(get_ma120("KRW-ETH"))
-    print(df['in_uptrend'][last_row_index])
+    closevalue = df['close'][-1]
 
-    if current_price_up > ma120 :
-        print("current_price_up > ma120")
-    else :
-        print("current_price_up <= ma120")
-
-    if cv >= ma120 :
+    if closevalue >= ma120 :
         cv_ma120 = True
         print("cv_ma120 >= ma120")
     else :
         cv_ma120 = False
         print("cv_ma1120 < ma120")
 
-    if ((not df['in_uptrend'][previous_row_index] and df['in_uptrend'][last_row_index]) and (current_price_up > ma120))\
-                or ((df['in_uptrend'][previous_row_index] and df['in_uptrend'][last_row_index]) and (current_price_up > ma120)) :
+    if ((not df['in_uptrend'][previous_row_index] and df['in_uptrend'][last_row_index]) and (close95 > ma120))\
+                or ((df['in_uptrend'][previous_row_index] and df['in_uptrend'][last_row_index]) and (close95 > ma120)) :
             if not in_position:
                 try :
                     krw = upbit.get_balance("KRW")
@@ -111,9 +102,7 @@ def check_buy_sell_signals(df):
     else :
         pass
 
-    if ((df['in_uptrend'][previous_row_index] and not df['in_uptrend'][last_row_index]) or not cv_ma120)\
-            or ((not df['in_uptrend'][previous_row_index] and not df['in_uptrend'][last_row_index]) or not cv_ma120):
-
+    if (df['in_uptrend'][previous_row_index] and not df['in_uptrend'][last_row_index]) or not cv_ma120:
         if in_position:
             try :
                 print("changed to downtrend -> sell")
