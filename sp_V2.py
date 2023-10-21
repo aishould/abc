@@ -75,7 +75,7 @@ def check_buy_sell_signals(df):
     last_row_index = len(df.index) - 1
     previous_row_index = last_row_index - 1
     close95 = df['close'][-1] * 0.95
-    ma120 = get_ma120("KRW-ETH")
+    ma120 = get_ma120("KRW-BTC")
     closevalue = df['close'][-1]
 
     if closevalue >= ma120 :
@@ -90,7 +90,7 @@ def check_buy_sell_signals(df):
             if not in_position:
                 try :
                     krw = upbit.get_balance("KRW")
-                    upbit.buy_market_order("KRW-ETH", krw*0.998)
+                    upbit.buy_market_order("KRW-BTC", krw*0.998)
                     now = datetime.now()
                     print(now)
                     print("success to buy")
@@ -106,8 +106,8 @@ def check_buy_sell_signals(df):
         if in_position:
             try :
                 print("changed to downtrend -> sell")
-                eth = upbit.get_balance("ETH")
-                upbit.sell_market_order("KRW-ETH", eth)
+                btc = upbit.get_balance("BTC")
+                upbit.sell_market_order("KRW-BTC", btc)
                 now=datetime.now()
                 print(now)
                 print("success to sell")
@@ -119,7 +119,7 @@ def check_buy_sell_signals(df):
 
 def run_bot():
     print(f"Fetching new bars for {datetime.now().isoformat()}")
-    bars = pyupbit.get_ohlcv("KRW-ETH", interval="minute240")
+    bars = pyupbit.get_ohlcv("KRW-BTC", interval="minute240")
     df = pd.DataFrame(bars[:-1], columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
 
